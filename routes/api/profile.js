@@ -35,7 +35,6 @@ router.post(
     '/',
     auth,
     [
-        check('status', 'Status is required.').not().isEmpty(),
         check('role', 'Role is required.').not().isEmpty(),
         check('skills', 'Skills is required.').not().isEmpty(),
     ],
@@ -50,7 +49,6 @@ router.post(
             company,
             website,
             location,
-            status,
             role,
             skills,
             bio,
@@ -68,7 +66,6 @@ router.post(
         if (website) profileFields.website = website;
         if (location) profileFields.location = location;
         if (bio) profileFields.bio = bio;
-        if (status) profileFields.status = status;
         if (role) profileFields.role = role;
         if (skills) {
             profileFields.skills = skills
@@ -175,12 +172,12 @@ router.put(
     [
         auth,
         [
-            check('title', 'Title is required.').not().isEmpty(),
-            check('company', 'Company is required.').not().isEmpty(),
-            check('field', 'Field is required.').not().isEmpty(),
-            check('date', 'Date is required.').not().isEmpty(),
-            check('reoccurrence', 'Reoccurrence is required.').not().isEmpty(),
-            check('proof', 'Proof is required.').not().isEmpty(),
+            check('title', 'כותרת הינה שדה חובה.').not().isEmpty(),
+            check('company', 'חברה הינה שדה חובה.').not().isEmpty(),
+            check('field', 'תחום הינו שדה חובה.').not().isEmpty(),
+            check('date', 'תאריך ביצוע הינו שדה חובה.').not().isEmpty(),
+            check('description', 'תיאור הינו שדה חובה.').not().isEmpty(),
+            check('proof', 'תיעוד הינו שדה חובה.').not().isEmpty(),
         ],
     ],
     async (req, res) => {
@@ -189,7 +186,16 @@ router.put(
             return res.status(400).json({ errors: errors.array() });
         }
 
-        const { title, company, field, date, reoccurrence, proof } = req.body;
+        const {
+            title,
+            company,
+            field,
+            date,
+            description,
+            oneTime,
+            reoccurrence,
+            proof,
+        } = req.body;
 
         // Calculate next date according to reoccurrence time
         var currentDate = new Date(date);
@@ -202,6 +208,8 @@ router.put(
             company,
             field,
             date,
+            description,
+            oneTime,
             reoccurrence,
             nextDate,
             proof,

@@ -16,7 +16,7 @@ router.get('/', auth, async (req, res) => {
         res.status(200).json(user);
     } catch (err) {
         console.log(err.message);
-        res.status(500).send('Server error.');
+        res.status(500).send('שגיאת שרת.');
     }
 });
 
@@ -26,8 +26,8 @@ router.get('/', auth, async (req, res) => {
 router.post(
     '/',
     [
-        check('email', 'Please enter a valid email address.').isEmail(),
-        check('password', 'Please provide a password.').exists(),
+        check('email', 'אנא הכנס דואר אלקטרוני תקין.').isEmail(),
+        check('password', 'אנא הכנס סיסמה תקינה.').exists(),
     ],
     async (req, res) => {
         // Check for errors in request
@@ -44,7 +44,7 @@ router.post(
             let user = await User.findOne({ email });
             if (!user) {
                 return res.status(400).json({
-                    errors: [{ msg: 'Invalid credentials.' }],
+                    errors: [{ msg: 'שם משתמש או סיסמה אינם נכונים.' }],
                 });
             }
 
@@ -52,7 +52,7 @@ router.post(
 
             if (!isMatch) {
                 return res.status(400).json({
-                    errors: [{ msg: 'Invalid credentials.' }],
+                    errors: [{ msg: 'שם משתמש או סיסמה אינם נכונים.' }],
                 });
             }
 
@@ -74,7 +74,7 @@ router.post(
             );
         } catch (err) {
             console.log(err.message);
-            res.status(500).send('Server error.');
+            res.status(500).send('שגיאת שרת.');
         }
     }
 );

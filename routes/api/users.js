@@ -13,13 +13,12 @@ const User = require('../../models/User');
 router.post(
     '/',
     [
-        check('firstName', 'First name is required').not().isEmpty(),
-        check('lastName', 'Last name is required').not().isEmpty(),
-        check('email', 'Please enter a valid email address.').isEmail(),
-        check(
-            'password',
-            'Please enter a password with 6 or more characters.'
-        ).isLength({ min: 6 }),
+        check('firstName', 'שם פרטי הינו הכרחי.').not().isEmpty(),
+        check('lastName', 'שם משפחה הינו הכרחי.').not().isEmpty(),
+        check('email', 'אנא הכנס כתובת דואר אלקטרוני תקינה.').isEmail(),
+        check('password', 'אנא הכנס סיסמה בעלת 6 תווים או יותר.').isLength({
+            min: 6,
+        }),
     ],
     async (req, res) => {
         // Check for errors in request

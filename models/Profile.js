@@ -14,10 +14,6 @@ const ProfileSchema = new mongoose.Schema({
     location: {
         type: String,
     },
-    status: {
-        type: String,
-        required: true,
-    },
     role: {
         type: String,
         required: true,
@@ -64,9 +60,11 @@ const ProfileSchema = new mongoose.Schema({
                 type: Date,
                 required: true,
             },
+            oneTime: {
+                type: Boolean,
+            },
             reoccurrence: {
                 type: Number,
-                required: true,
             },
             nextDate: {
                 type: Date,
