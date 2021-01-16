@@ -1,15 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Alert as AlertBootstrap } from 'react-bootstrap';
 
 const Alert = ({ alerts }) =>
     alerts !== null &&
     alerts !== 'undefined' &&
     alerts.length > 0 &&
     alerts.map((alert) => (
-        <div key={alert.id} className={`alert alert-${alert.alertType}`}>
+        <AlertBootstrap variant={alert.alertType} key={alert.id}>
             {alert.msg}
-        </div>
+        </AlertBootstrap>
     ));
 
 Alert.propTypes = {

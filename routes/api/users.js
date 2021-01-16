@@ -19,6 +19,7 @@ router.post(
         check('password', 'אנא הכנס סיסמה בעלת 6 תווים או יותר.').isLength({
             min: 6,
         }),
+        check('authLevel', 'רמת הרשאה הינה שדה חובה').not().isEmpty(),
     ],
     async (req, res) => {
         // Check for errors in request
@@ -28,7 +29,14 @@ router.post(
         }
 
         // Extract relevant data
-        const { firstName, lastName, email, password } = req.body;
+        const {
+            firstName,
+            lastName,
+            email,
+            password,
+            authLevel,
+            site,
+        } = req.body;
 
         try {
             // Check if user exists
@@ -45,6 +53,8 @@ router.post(
                 lastName,
                 email,
                 password,
+                authLevel,
+                site,
             });
 
             // Encrypt password

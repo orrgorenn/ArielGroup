@@ -1,14 +1,12 @@
-import React, { Fragment, useState } from 'react';
+import React, { useState } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createProfile } from '../../actions/profile';
+import { Form, Container, Row, Col, Button } from 'react-bootstrap';
 
 const CreateProfile = ({ createProfile, history }) => {
     const [formData, setFormData] = useState({
-        company: '',
-        website: '',
-        location: '',
         role: '',
         skills: '',
         bio: '',
@@ -22,9 +20,6 @@ const CreateProfile = ({ createProfile, history }) => {
     const [displaySocialInputs, toggleSocialInputs] = useState(false);
 
     const {
-        company,
-        website,
-        location,
         role,
         skills,
         bio,
@@ -44,164 +39,193 @@ const CreateProfile = ({ createProfile, history }) => {
     };
 
     return (
-        <Fragment>
-            <h1 className="large text-primary">צור פרופיל</h1>
-            <p className="lead">
-                <i className="fas fa-user"></i> שתף איזה מידע שתרצה בפרופיל
-                הציבורי שלך
-            </p>
-            <small>* = שדה חובה</small>
-            <form className="form" onSubmit={(e) => onSubmit(e)}>
-                <div className="form-group">
-                    <select
-                        name="role"
-                        value={role}
-                        onChange={(e) => onChange(e)}
-                    >
-                        <option value="0">* בחר תפקיד</option>
-                        <option value="מנהל/ת חברת ניהול">
-                            מנהל/ת חברת ניהול
-                        </option>
-                        <option value="מנהל/ת ביטחון">מנהל/ת ביטחון</option>
-                        <option value="מנהל/ת אחזקה">מנהל/ת אחזקה</option>
-                        <option value="מנהל/ת תפעול">מנהל/ת תפעול</option>
-                        <option value="מנהל/ת חניון">מנהל/ת חניון</option>
-                        <option value="עובד ביטחון">עובד ביטחון</option>
-                        <option value="עובד ניקיון">עובד ניקיון</option>
-                        <option value="עובד אחזקה">עובד אחזקה</option>
-                    </select>
-                </div>
-                <div className="form-group">
-                    <input
-                        type="text"
-                        placeholder="חברה"
-                        name="company"
-                        value={company}
-                        onChange={(e) => onChange(e)}
-                    />
-                    <small className="form-text">
-                        נא הקפד למלא את אותו שם עבור עובדים באותה חברה.
-                    </small>
-                </div>
-                <div className="form-group">
-                    <input
-                        type="text"
-                        placeholder="אתר אינטרנט"
-                        name="website"
-                        value={website}
-                        onChange={(e) => onChange(e)}
-                    />
-                </div>
-                <div className="form-group">
-                    <input
-                        type="text"
-                        placeholder="מיקום"
-                        name="location"
-                        value={location}
-                        onChange={(e) => onChange(e)}
-                    />
-                </div>
-                <div className="form-group">
-                    <input
-                        type="text"
-                        placeholder="* תחומי אחריות"
-                        name="skills"
-                        value={skills}
-                        onChange={(e) => onChange(e)}
-                    />
-                    <small className="form-text">
-                        נא הפרד תחומי אחריות בפסיק.
-                    </small>
-                </div>
-                <div className="form-group">
-                    <textarea
-                        placeholder="תקציר קצר אודות העובד"
-                        name="bio"
-                        value={bio}
-                        onChange={(e) => onChange(e)}
-                    ></textarea>
-                </div>
-
-                <div className="my-2">
-                    <button
-                        onClick={() => toggleSocialInputs(!displaySocialInputs)}
-                        type="button"
-                        className="btn btn-light"
-                    >
-                        הוסף רשת חברתית
-                    </button>
-                    <span>לא חובה</span>
-                </div>
-
-                {displaySocialInputs && (
-                    <Fragment>
-                        <div className="form-group social-input">
-                            <i className="fab fa-twitter fa-2x"></i>
-                            <input
+        <Container>
+            <Row>
+                <Col>
+                    <h1>צור פרופיל חדש</h1>
+                    <small>* = שדה חובה</small>
+                    <br />
+                    <Form onSubmit={(e) => onSubmit(e)}>
+                        <Form.Group controlId="formBasicRole">
+                            <Form.Control
+                                as="select"
+                                name="role"
+                                value={role}
+                                onChange={(e) => onChange(e)}
+                            >
+                                <option value="0">* בחר תפקיד</option>
+                                <option value="מנהל/ת חברת ניהול">
+                                    מנהל/ת חברת ניהול
+                                </option>
+                                <option value="מנהל/ת ביטחון">
+                                    מנהל/ת ביטחון
+                                </option>
+                                <option value="מנהל/ת אחזקה">
+                                    מנהל/ת אחזקה
+                                </option>
+                                <option value="מנהל/ת תפעול">
+                                    מנהל/ת תפעול
+                                </option>
+                                <option value="מנהל/ת חניון">
+                                    מנהל/ת חניון
+                                </option>
+                                <option value="עובד ביטחון">עובד ביטחון</option>
+                                <option value="עובד ניקיון">עובד ניקיון</option>
+                                <option value="עובד אחזקה">עובד אחזקה</option>
+                            </Form.Control>
+                        </Form.Group>
+                        <Form.Group controlId="formBasicSkills">
+                            <Form.Control
                                 type="text"
-                                placeholder="כתובת טוויטר"
-                                name="twitter"
-                                value={twitter}
+                                placeholder="* תחומי אחריות"
+                                name="skills"
+                                value={skills}
                                 onChange={(e) => onChange(e)}
                             />
-                        </div>
-
-                        <div className="form-group social-input">
-                            <i className="fab fa-facebook fa-2x"></i>
-                            <input
-                                type="text"
-                                placeholder="כתובת פייסבוק"
-                                name="facebook"
-                                value={facebook}
+                            <small className="form-text">
+                                נא הפרד תחומי אחריות בפסיק.
+                            </small>
+                        </Form.Group>
+                        <Form.Group controlId="formBasicBio">
+                            <Form.Control
+                                as="textarea"
+                                placeholder="כמה מילים על עצמך"
+                                name="bio"
+                                value={bio}
                                 onChange={(e) => onChange(e)}
-                            />
+                            ></Form.Control>
+                        </Form.Group>
+
+                        <div className="my-2">
+                            <Button
+                                onClick={() =>
+                                    toggleSocialInputs(!displaySocialInputs)
+                                }
+                                type="button"
+                                variant="info"
+                            >
+                                הוסף רשת חברתית
+                            </Button>
+                            <span style={{ marginRight: '1rem' }}>לא חובה</span>
                         </div>
 
-                        <div className="form-group social-input">
-                            <i className="fab fa-youtube fa-2x"></i>
-                            <input
-                                type="text"
-                                placeholder="כתובת יוטיוב"
-                                name="youtube"
-                                value={youtube}
-                                onChange={(e) => onChange(e)}
-                            />
-                        </div>
+                        {displaySocialInputs && (
+                            <Container fluid style={{ marginTop: '1rem' }}>
+                                <Form.Group>
+                                    <Form.Row controlId="formBasicTwitter">
+                                        <Col xs="1">
+                                            <Form.Text id="twitterHelpBlock">
+                                                <i className="fab fa-twitter fa-2x"></i>
+                                            </Form.Text>
+                                        </Col>
+                                        <Col xs="11">
+                                            <Form.Control
+                                                type="text"
+                                                placeholder="כתובת טוויטר"
+                                                name="twitter"
+                                                value={twitter}
+                                                onChange={(e) => onChange(e)}
+                                            />
+                                        </Col>
+                                    </Form.Row>
+                                </Form.Group>
 
-                        <div className="form-group social-input">
-                            <i className="fab fa-linkedin fa-2x"></i>
-                            <input
-                                type="text"
-                                placeholder="כתובת לינקדאין"
-                                name="linkedin"
-                                value={linkedin}
-                                onChange={(e) => onChange(e)}
-                            />
-                        </div>
+                                <Form.Group>
+                                    <Form.Row controlId="formBasicFacebook">
+                                        <Col xs="1">
+                                            <Form.Text id="facebookHelpBlock">
+                                                <i className="fab fa-facebook fa-2x"></i>
+                                            </Form.Text>
+                                        </Col>
+                                        <Col xs="11">
+                                            <Form.Control
+                                                type="text"
+                                                placeholder="כתובת פייסבוק"
+                                                name="facebook"
+                                                value={facebook}
+                                                onChange={(e) => onChange(e)}
+                                            />
+                                        </Col>
+                                    </Form.Row>
+                                </Form.Group>
 
-                        <div className="form-group social-input">
-                            <i className="fab fa-instagram fa-2x"></i>
-                            <input
-                                type="text"
-                                placeholder="כתובת אינסטגרם"
-                                name="instagram"
-                                value={instagram}
-                                onChange={(e) => onChange(e)}
-                            />
-                        </div>
-                    </Fragment>
-                )}
+                                <Form.Group>
+                                    <Form.Row controlId="formBasicYoutube">
+                                        <Col xs="1">
+                                            <Form.Text id="youtubeHelpBlock">
+                                                <i className="fab fa-youtube fa-2x"></i>
+                                            </Form.Text>
+                                        </Col>
+                                        <Col xs="11">
+                                            <Form.Control
+                                                type="text"
+                                                placeholder="כתובת יוטיוב"
+                                                name="youtube"
+                                                value={youtube}
+                                                onChange={(e) => onChange(e)}
+                                            />
+                                        </Col>
+                                    </Form.Row>
+                                </Form.Group>
 
-                <input
-                    type="submit"
-                    value="שלח"
-                    className="btn btn-primary my-1"
-                />
-                <Link className="btn btn-light my-1" to="/dashboard">
-                    חזור חזרה
-                </Link>
-            </form>
-        </Fragment>
+                                <Form.Group>
+                                    <Form.Row controlId="formBasicLinkedin">
+                                        <Col xs="1">
+                                            <Form.Text id="linkedinHelpBlock">
+                                                <i className="fab fa-linkedin fa-2x"></i>
+                                            </Form.Text>
+                                        </Col>
+                                        <Col xs="11">
+                                            <Form.Control
+                                                type="text"
+                                                placeholder="כתובת לינקדאין"
+                                                name="linkedin"
+                                                value={linkedin}
+                                                onChange={(e) => onChange(e)}
+                                            />
+                                        </Col>
+                                    </Form.Row>
+                                </Form.Group>
+
+                                <Form.Group>
+                                    <Form.Row controlId="formBasicInstagram">
+                                        <Col xs="1">
+                                            <Form.Text id="instagramHelpBlock">
+                                                <i className="fab fa-instagram fa-2x"></i>
+                                            </Form.Text>
+                                        </Col>
+                                        <Col xs="11">
+                                            <Form.Control
+                                                type="text"
+                                                placeholder="כתובת אינסטגרם"
+                                                name="instagram"
+                                                value={instagram}
+                                                onChange={(e) => onChange(e)}
+                                            />
+                                        </Col>
+                                    </Form.Row>
+                                </Form.Group>
+                            </Container>
+                        )}
+
+                        <Button
+                            type="submit"
+                            variant="primary"
+                            className="my-1"
+                        >
+                            צור פרופיל
+                        </Button>
+                        <Link
+                            style={{ marginRight: '0.5rem' }}
+                            className="btn btn-warning my-1"
+                            to="/profile"
+                        >
+                            חזור חזרה
+                        </Link>
+                    </Form>
+                </Col>
+            </Row>
+        </Container>
     );
 };
 

@@ -19,6 +19,8 @@ body {
     line-height: 1.6;
     background-color: #fff;
     color: #333;
+    direction: rtl;
+    text-align: right;
 }
 
 a {
@@ -76,54 +78,61 @@ color: var(--dark-color);
 
 /* Padding */
 .p {
-padding: 0.5rem;
+    padding: 0.5rem;
 }
 .p-1 {
-padding: 1rem;
+    padding: 1rem;
 }
 .p-2 {
-padding: 2rem;
+    padding: 2rem;
 }
 .p-3 {
-padding: 3rem;
+    padding: 3rem;
 }
 .py {
-padding: 0.5rem 0;
+    padding: 0.5rem 0;
 }
 .py-1 {
-padding: 1rem 0;
+    padding: 1rem 0;
 }
 .py-2 {
-padding: 2rem 0;
+    padding: 2rem 0;
 }
 .py-3 {
-padding: 3rem 0;
+    padding: 3rem 0;
 }
 
 /* Margin */
 .m {
-margin: 0.5rem;
+    margin: 0.5rem;
 }
+
 .m-1 {
-margin: 1rem;
+    margin: 1rem;
 }
+
 .m-2 {
-margin: 2rem;
+    margin: 2rem;
 }
+
 .m-3 {
-margin: 3rem;
+    margin: 3rem;
 }
+
 .my {
-margin: 0.5rem 0;
+    margin: 0.5rem 0;
 }
+
 .my-1 {
-margin: 1rem 0;
+    margin: 1rem 0;
 }
+
 .my-2 {
-margin: 2rem 0;
+    margin: 2rem 0;
 }
+
 .my-3 {
-margin: 3rem 0;
+    margin: 3rem 0;
 }
 
 .btn {
@@ -149,9 +158,9 @@ margin: 3rem 0;
 }
 
 .alert {
-padding: 0.8rem;
-margin: 1rem 0;
-opacity: 0.9;
+    padding: 0.8rem;
+    margin: 1rem 0;
+    opacity: 0.9;
     background: var(--light-color);
     color: #333;
 }
@@ -235,6 +244,10 @@ opacity: 0.9;
 }
 
 /* Forms */
+.form {
+    direction: rtl;
+}
+
 .form .form-group {
     margin: 1.2rem 0;
 }
@@ -273,16 +286,16 @@ opacity: 0.9;
 
 .form input[type='submit'],
 button {
-font: inherit;
+    font: inherit;
 }
 
 .form .social-input {
-display: flex;
+    display: flex;
 }
 
 .form .social-input i {
-padding: 0.5rem;
-width: 4rem;
+    padding: 0.5rem;
+    width: 4rem;
 }
 
 .form .social-input i.fa-twitter {
@@ -308,7 +321,7 @@ width: 4rem;
 }
 
 .table th {
-background: var(--light-color);
+    background: var(--light-color);
 }
 
 /* Navbar */
@@ -327,6 +340,7 @@ background: var(--light-color);
 
 .navbar ul {
     display: flex;
+    text-align: right;
 }
 
 .navbar a {
@@ -379,8 +393,7 @@ background: var(--light-color);
     grid-template-areas:
         'top top'
         'about about'
-        'exp edu'
-        'github github';
+        'exp';
     grid-gap: 1rem;
 }
 
@@ -419,51 +432,51 @@ background: var(--light-color);
 }
 
 .profile-exp {
-grid-area: exp;
+    grid-area: exp;
 }
 
 .profile-edu {
-grid-area: edu;
+    grid-area: edu;
 }
 
 .profile-exp h2,
 .profile-edu h2 {
-margin-bottom: 1rem;
+    margin-bottom: 1rem;
 }
 
 .profile-exp > div,
 .profile-edu > div {
-margin-bottom: 1rem;
-padding-bottom: 1rem;
-border-bottom: #ccc 1px dotted;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: #ccc 1px dotted;
 }
 
 .profile-exp > div:last-child,
 .profile-edu > div:last-child {
-border: 0;
+    border: 0;
 }
 
 .profile-exp p,
 .profile-edu p {
-margin: 0.5rem 0;
+    margin: 0.5rem 0;
 }
 
 .profile-github {
-grid-area: github;
+    grid-area: github;
 }
 
 .profile-github .repo {
-display: flex;
+    display: flex;
 }
 
 .profile-github .repo > div:first-child {
-flex: 7;
-flex-basis: 70%;
+    flex: 7;
+    flex-basis: 70%;
 }
 
 .profile-github > div:last-child {
-flex: 3;
-flex-basis: 20%;
+    flex: 3;
+    flex-basis: 20%;
 }
 
 /* Posts Page */
@@ -480,25 +493,25 @@ flex-basis: 20%;
 }
 
 .post > div:first-child {
-text-align: center;
+    text-align: center;
 }
 
 .post img {
-width: 100px;
+    width: 100px;
 }
 
 .post .comment-count {
-background: var(--light-color);
-color: var(--primary-color);
-padding: 0.1rem 0.2rem;
-border-radius: 5px;
-font-size: 0.8rem;
+    background: var(--light-color);
+    color: var(--primary-color);
+    padding: 0.1rem 0.2rem;
+    border-radius: 5px;
+    font-size: 0.8rem;
 }
 
 .post .post-date {
-color: #aaa;
-font-size: 0.8rem;
-margin-bottom: 0.5rem;
+    color: #aaa;
+    font-size: 0.8rem;
+    margin-bottom: 0.5rem;
 }
 
 /* Mobile Styles */

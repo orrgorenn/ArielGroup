@@ -42,39 +42,6 @@ const ProfileSchema = new mongoose.Schema({
             type: String,
         },
     },
-    training: [
-        {
-            title: {
-                type: String,
-                required: true,
-            },
-            company: {
-                type: String,
-                required: true,
-            },
-            field: {
-                type: String,
-                required: true,
-            },
-            date: {
-                type: Date,
-                required: true,
-            },
-            oneTime: {
-                type: Boolean,
-            },
-            reoccurrence: {
-                type: Number,
-            },
-            nextDate: {
-                type: Date,
-            },
-            proof: {
-                type: String,
-                required: true,
-            },
-        },
-    ],
     date: {
         type: Date,
         default: Date.now,

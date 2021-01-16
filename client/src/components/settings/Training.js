@@ -23,6 +23,7 @@ const Training = ({ training, deleteTraining }) => {
                 <button
                     onClick={() => deleteTraining(trng._id)}
                     className="btn btn-danger"
+                    disabled
                 >
                     מחק
                 </button>

@@ -46,9 +46,6 @@ router.post(
         }
 
         const {
-            company,
-            website,
-            location,
             role,
             skills,
             bio,
@@ -62,9 +59,6 @@ router.post(
         // Create profile object
         const profileFields = {};
         profileFields.user = req.user.id;
-        if (company) profileFields.company = company;
-        if (website) profileFields.website = website;
-        if (location) profileFields.location = location;
         if (bio) profileFields.bio = bio;
         if (role) profileFields.role = role;
         if (skills) {
@@ -158,92 +152,6 @@ router.delete('/', auth, async (req, res) => {
         await User.findOneAndRemove({ _id: req.user.id });
 
         res.status(200).json({ msg: 'User deleted.' });
-    } catch (err) {
-        console.log(err.message);
-        res.status(500).send('Server error.');
-    }
-});
-
-// @route   PUT api/profile/training
-// @desc    Add profile training
-// @access  Private
-router.put(
-    '/training',
-    [
-        auth,
-        [
-            check('title', 'כותרת הינה שדה חובה.').not().isEmpty(),
-            check('company', 'חברה הינה שדה חובה.').not().isEmpty(),
-            check('field', 'תחום הינו שדה חובה.').not().isEmpty(),
-            check('date', 'תאריך ביצוע הינו שדה חובה.').not().isEmpty(),
-            check('description', 'תיאור הינו שדה חובה.').not().isEmpty(),
-            check('proof', 'תיעוד הינו שדה חובה.').not().isEmpty(),
-        ],
-    ],
-    async (req, res) => {
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            return res.status(400).json({ errors: errors.array() });
-        }
-
-        const {
-            title,
-            company,
-            field,
-            date,
-            description,
-            oneTime,
-            reoccurrence,
-            proof,
-        } = req.body;
-
-        // Calculate next date according to reoccurrence time
-        var currentDate = new Date(date);
-        var nextDate = new Date(
-            currentDate.setMonth(currentDate.getMonth() + reoccurrence)
-        );
-
-        const newTraining = {
-            title,
-            company,
-            field,
-            date,
-            description,
-            oneTime,
-            reoccurrence,
-            nextDate,
-            proof,
-        };
-
-        try {
-            const profile = await Profile.findOne({ user: req.user.id });
-            profile.training.unshift(newTraining);
-            await profile.save();
-            res.status(200).json(profile);
-        } catch (err) {
-            console.log(err.message);
-            res.status(500).send('Server error.');
-        }
-    }
-);
-
-// @route   DELETE api/profile/training/:tid
-// @desc    Delete profile training
-// @access  Private
-router.delete('/training/:tid', auth, async (req, res) => {
-    try {
-        const profile = await Profile.findOne({ user: req.user.id });
-        const removeIndex = profile.training
-            .map((item) => item.id)
-            .indexOf(req.params.tid);
-
-        if (removeIndex === -1) {
-            res.status(400).send('Training not found.');
-        }
-
-        profile.training.splice(removeIndex, 1);
-        await profile.save();
-        res.status(200).json(profile);
     } catch (err) {
         console.log(err.message);
         res.status(500).send('Server error.');

@@ -1,8 +1,9 @@
-import React, { Fragment, useState } from 'react';
+import React, { useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { login } from '../../actions/auth';
+import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 
 const Login = ({ login, isAuthenticated }) => {
     const [formData, setFormData] = useState({
@@ -26,42 +27,41 @@ const Login = ({ login, isAuthenticated }) => {
     }
 
     return (
-        <Fragment>
-            <h1 className="large text-primary">התחברות</h1>
-            <p className="lead">
-                <i className="fas fa-user"></i> התחבר לחשבונך
-            </p>
-            <form className="form" onSubmit={(e) => onSubmit(e)}>
-                <div className="form-group">
-                    <input
-                        type="email"
-                        placeholder="דואר אלקטרוני"
-                        name="email"
-                        value={email}
-                        onChange={(e) => onChange(e)}
-                        required
-                    />
-                </div>
-                <div className="form-group">
-                    <input
-                        type="password"
-                        placeholder="סיסמה"
-                        name="password"
-                        value={password}
-                        onChange={(e) => onChange(e)}
-                        minLength="6"
-                    />
-                </div>
-                <input
-                    type="submit"
-                    className="btn btn-primary"
-                    value="התחבר"
-                />
-            </form>
-            <p className="my-1">
-                עוד לא נרשמת? <Link to="/register">הרשם כאן</Link>
-            </p>
-        </Fragment>
+        <Container>
+            <Row>
+                <Col>
+                    <h1>התחבר לחשבונך</h1>
+                    <Form onSubmit={(e) => onSubmit(e)}>
+                        <Form.Group controlId="formBasicEmail">
+                            <Form.Control
+                                type="email"
+                                placeholder="דואר אלקטרוני"
+                                name="email"
+                                value={email}
+                                onChange={(e) => onChange(e)}
+                                required
+                            />
+                        </Form.Group>
+                        <Form.Group controlId="formBasicPassword">
+                            <Form.Control
+                                type="password"
+                                placeholder="סיסמה"
+                                name="password"
+                                value={password}
+                                onChange={(e) => onChange(e)}
+                                minLength="6"
+                            />
+                        </Form.Group>
+                        <Button type="submit" variant="primary">
+                            התחבר
+                        </Button>
+                    </Form>
+                    <p className="my-1">
+                        עוד לא נרשמת? <Link to="/register">הרשם כאן</Link>
+                    </p>
+                </Col>
+            </Row>
+        </Container>
     );
 };
 
