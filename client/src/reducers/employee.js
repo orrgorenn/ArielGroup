@@ -21,6 +21,7 @@ export default function employeeReducer(state = initialState, action) {
             return {
                 ...state,
                 employees: payload,
+                employee: null,
                 loading: false,
             };
         case EMPLOYEE_ERROR:

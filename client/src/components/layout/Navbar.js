@@ -16,13 +16,13 @@ export const Navbar = ({
             </Link>
             {user && user.authLevel > 1 ? (
                 <NavDropdown title="ניהול עובדים" id="basic-nav-dropdown">
-                    <Link className="dropdown-item" to="/employees">
+                    <NavDropdown.Item as={Link} to="/employees">
                         רשימת עובדים
-                    </Link>
+                    </NavDropdown.Item>
                     <NavDropdown.Divider />
-                    <Link className="dropdown-item" to="/add-employee">
+                    <NavDropdown.Item as={Link} to="/add-employee">
                         הוסף עובד חדש
-                    </Link>
+                    </NavDropdown.Item>
                 </NavDropdown>
             ) : (
                 ''
@@ -30,44 +30,38 @@ export const Navbar = ({
             {user && user.authLevel > 2 ? (
                 <>
                     <NavDropdown title="ניהול מחלקות" id="basic-nav-dropdown">
-                        <Link className="dropdown-item" to="/departments">
+                        <NavDropdown.Item as={Link} to="/departments">
                             רשימת מחלקות
-                        </Link>
+                        </NavDropdown.Item>
                         <NavDropdown.Divider />
-                        <Link className="dropdown-item" to="/add-department">
+                        <NavDropdown.Item as={Link} to="/add-department">
                             הוסף מחלקה חדשה
-                        </Link>
+                        </NavDropdown.Item>
                     </NavDropdown>
                     <NavDropdown title="בקרת איכות" id="basic-nav-dropdown">
-                        <Link to="/iso" className="dropdown-item">
+                        <NavDropdown.Item to="/iso" as={Link}>
                             ISO 9001
-                        </Link>
-                    </NavDropdown>
-                    <NavDropdown title="ניהול משתמשים" id="basic-nav-dropdown">
-                        <Link className="dropdown-item" to="/profiles">
-                            רשימת משתמשים
-                        </Link>
-                        <NavDropdown.Divider />
-                        <Link className="dropdown-item" to="/add-user">
-                            הוסף משתמש חדש
-                        </Link>
+                        </NavDropdown.Item>
                     </NavDropdown>
                 </>
             ) : (
                 ''
             )}
             <NavDropdown title="קריאות שירות" id="basic-nav-dropdown">
-                <Link className="dropdown-item" to="/open-tickets">
+                <NavDropdown.Item as={Link} to="/open-tickets">
                     תקלות פתוחות
-                </Link>
-                <Link className="dropdown-item" to="/closed-tickets">
+                </NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="/closed-tickets">
                     תקלות סגורות
-                </Link>
+                </NavDropdown.Item>
                 <NavDropdown.Divider />
-                <Link className="dropdown-item" to="/new-ticket">
+                <NavDropdown.Item as={Link} to="/new-ticket">
                     פתח תקלה חדשה
-                </Link>
+                </NavDropdown.Item>
             </NavDropdown>
+            <Nav.Link as={Link} to="/community">
+                קהילה
+            </Nav.Link>
         </Fragment>
     );
 

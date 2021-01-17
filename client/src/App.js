@@ -14,6 +14,9 @@ import PrivateRoute from './components/routing/PrivateRoute';
 import Employees from './components/employees/Employees';
 import Profile from './components/profile/Profile';
 import Employee from './components/employee/Employee';
+import CreateEmployee from './components/employee-forms/CreateEmployee';
+import Departments from './components/departments/Departments';
+import Department from './components/department/Department';
 // Redux
 import { Provider } from 'react-redux';
 import store from './store';
@@ -87,6 +90,21 @@ const App = () => {
                                 exact
                                 path="/employee/:id"
                                 component={Employee}
+                            />
+                            <PrivateRoute
+                                exact
+                                path="/add-employee"
+                                component={CreateEmployee}
+                            />
+                            <PrivateRoute
+                                exact
+                                path="/departments"
+                                component={Departments}
+                            />
+                            <PrivateRoute
+                                exact
+                                path="/department/:id"
+                                component={Department}
                             />
                         </Switch>
                     </Container>

@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { Redirect } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { setAlert } from '../../actions/alert';
 import { register, getSites } from '../../actions/auth';
@@ -13,7 +12,9 @@ export const AddUser = ({
     getSites,
     sites,
 }) => {
-    getSites();
+    useEffect(() => {
+        getSites();
+    }, [getSites]);
 
     const [formData, setFormData] = useState({
         firstName: '',

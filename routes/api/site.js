@@ -158,11 +158,11 @@ router.get('/:sid/employee', auth, async (req, res) => {
     }
 });
 
-// @route   PUT api/site/:bn/employee
+// @route   PUT api/site/:sid/employee
 // @desc    Add site employee
 // @access  Private
 router.put(
-    '/:bn/employee',
+    '/:sid/employee',
     [
         auth,
         [
@@ -190,8 +190,9 @@ router.put(
 
         try {
             const site = await Site.findOne({
-                bnNumber: parseInt(req.params.bn),
+                _id: req.params.sid,
             });
+
             site.employees.unshift(newEmployee);
             await site.save();
             res.status(200).json(site);
@@ -226,7 +227,7 @@ router.delete('/:bn/employee/:ban', auth, async (req, res) => {
 });
 
 // @route   GET /api/site/:sid/employee/:eid
-// @desc    GET Site employees by Site ID & Employee ID
+// @desc    GET Site employee by Site ID & Employee ID
 // @access  Private
 router.get('/:sid/employee/:eid', auth, async (req, res) => {
     try {
@@ -256,11 +257,34 @@ router.get('/:sid/employee/:eid', auth, async (req, res) => {
     }
 });
 
+// @route   GET /api/site/:sid/employee
+// @desc    GET Site employees by Site ID
+// @access  Private
+router.get('/:sid/department', auth, async (req, res) => {
+    try {
+        const site = await Site.findOne({
+            _id: req.params.sid,
+        });
+
+        if (!site) {
+            return res.status(404).json({ msg: 'Site not found.' });
+        }
+
+        res.status(200).json(site.departments);
+    } catch (err) {
+        console.log(err.message);
+        if (err.kind == 'ObjectId') {
+            return res.status(404).json({ msg: 'Site not found.' });
+        }
+        res.status(500).send('Server error.');
+    }
+});
+
 // @route   PUT api/site/:bn/department
 // @desc    Add site department
 // @access  Private
 router.put(
-    '/:bn/department',
+    '/:sid/department',
     [
         auth,
         [
@@ -284,8 +308,13 @@ router.put(
 
         try {
             const site = await Site.findOne({
-                bnNumber: parseInt(req.params.bn),
+                _id: req.params.sid,
             });
+
+            if (!site) {
+                return res.status(404).json({ msg: 'Site not found.' });
+            }
+
             site.departments.unshift(newDepartment);
             await site.save();
             res.status(200).json(site);
@@ -296,12 +325,12 @@ router.put(
     }
 );
 
-// @route   DELETE api/site/:bn/department/:eid
+// @route   DELETE api/site/:sid/department/:eid
 // @desc    Delete site department
 // @access  Private
-router.delete('/:bn/department/:did', auth, async (req, res) => {
+router.delete('/:sid/department/:did', auth, async (req, res) => {
     try {
-        const site = await Site.findOne({ bnNumber: parseInt(req.params.bn) });
+        const site = await Site.findOne({ _id: req.params.sid });
         const removeIndex = site.departments
             .map((item) => item.id)
             .indexOf(req.params.did);
@@ -397,7 +426,7 @@ router.put(
 // @access  Private
 router.delete('/:bn/employee/:eid/training/:tid', auth, async (req, res) => {
     try {
-        const site = await Site.findOne({ bnNumber: parseInt(req.params.bn) });
+        const site = await Site.findOne({ _id: req.params.sid });
 
         site.employees.forEach((employee) => {
             if (employee.id.toString() === req.params.eid) {
@@ -416,6 +445,120 @@ router.delete('/:bn/employee/:eid/training/:tid', auth, async (req, res) => {
         res.status(200).json(site);
     } catch (err) {
         console.log(err.message);
+        res.status(500).send('Server error.');
+    }
+});
+
+// @route   PUT api/site/:sid/department/:did/training
+// @desc    Add Department Default Training
+// @access  Private
+router.put(
+    '/:sid/department/:did/training',
+    [
+        auth,
+        [
+            check('title', 'כותרת הינה שדה חובה.').not().isEmpty(),
+            check('field', 'תחום הינו שדה חובה.').not().isEmpty(),
+        ],
+    ],
+    async (req, res) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+
+        const { title, field, oneTime, reoccurrence } = req.body;
+
+        const newTraining = {
+            title,
+            field,
+            oneTime,
+            reoccurrence,
+        };
+
+        try {
+            const site = await Site.findOne({
+                _id: req.params.sid,
+            });
+
+            if (!site) {
+                return res.status(400).json({ msg: 'Site not found.' });
+            }
+
+            site.departments.forEach((department) => {
+                if (department.id.toString() === req.params.did) {
+                    department.defaultTraining.unshift(newTraining);
+                }
+            });
+
+            await site.save();
+            res.status(200).json(site);
+        } catch (err) {
+            console.log(err.message);
+            res.status(500).send('Server error.');
+        }
+    }
+);
+
+// @route   DELETE api/site/:sid/department/:did/:tid
+// @desc    Delete Department Default Training
+// @access  Private
+router.delete('/:sid/department/:did/training/:tid', auth, async (req, res) => {
+    try {
+        const site = await Site.findOne({ _id: req.params.sid });
+
+        if (!site) {
+            return res.status(400).json({ msg: 'Site not found.' });
+        }
+
+        site.departments.forEach((department) => {
+            if (department.id.toString() === req.params.did) {
+                const removeIndex = department.defaultTraining
+                    .map((item) => item.id)
+                    .indexOf(req.params.tid);
+
+                if (removeIndex === -1) {
+                    return res.status(400).send('Training not found.');
+                }
+
+                department.defaultTraining.splice(removeIndex, 1);
+            }
+        });
+        await site.save();
+        res.status(200).json(site);
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send('Server error.');
+    }
+});
+
+// @route   GET /api/site/:sid/department/:did
+// @desc    GET Site department by Site ID & Department ID
+// @access  Private
+router.get('/:sid/department/:did', auth, async (req, res) => {
+    try {
+        var department = null;
+
+        const site = await Site.findOne({
+            _id: req.params.sid,
+        });
+
+        if (!site) {
+            return res.status(404).json({ msg: 'Site not found.' });
+        }
+
+        site.departments.forEach((dpt) => {
+            if (dpt._id.toString() === req.params.did) {
+                department = dpt;
+            }
+        });
+
+        res.status(200).json(department);
+    } catch (err) {
+        console.log(err.message);
+        if (err.kind == 'ObjectId') {
+            return res.status(404).json({ msg: 'Site not found.' });
+        }
         res.status(500).send('Server error.');
     }
 });

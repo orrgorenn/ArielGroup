@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Spinner from '../layout/Spinner';
 import EmployeeItem from './EmployeeItem';
 import { getEmployeesByID } from '../../actions/employee';
+import { Link } from 'react-router-dom';
 
 const Employees = ({
     getEmployeesByID,
@@ -11,7 +12,7 @@ const Employees = ({
     auth: { user },
 }) => {
     useEffect(() => {
-        user !== null && getEmployeesByID(user.site);
+        user && getEmployeesByID(user.site);
     }, [user, getEmployeesByID]);
     return (
         <Fragment>
@@ -20,7 +21,10 @@ const Employees = ({
             ) : (
                 <Fragment>
                     <h1>רשימת עובדים</h1>
-                    <table className="table">
+                    <Link to="/add-employee" className="btn btn-primary">
+                        הוספת עובד חדש
+                    </Link>
+                    <table className="table" style={{ marginTop: '1.5rem' }}>
                         <thead>
                             <tr>
                                 <th>שם העובד</th>
@@ -55,6 +59,7 @@ const Employees = ({
 Employees.propTypes = {
     getEmployeesByID: PropTypes.func.isRequired,
     employee: PropTypes.object.isRequired,
+    auth: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({

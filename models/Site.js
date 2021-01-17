@@ -37,6 +37,24 @@ const SiteSchema = new mongoose.Schema({
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'user',
             },
+            defaultTraining: [
+                {
+                    title: {
+                        type: String,
+                        required: true,
+                    },
+                    field: {
+                        type: String,
+                        required: true,
+                    },
+                    oneTime: {
+                        type: Boolean,
+                    },
+                    reoccurrence: {
+                        type: Number,
+                    },
+                },
+            ],
         },
     ],
     employees: [
